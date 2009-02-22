@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'lib/poll'
 
 get '/' do
 	haml :index
@@ -9,12 +10,13 @@ get '/new' do
   haml :new
 end
 
-post '/new' do
-  redirect '/'
+get '/:id' do
+  poll = Poll.find(params[:id])
+  haml :show, :locals => {:poll => poll}
 end
 
-get '/:id' do
-  haml :show
+post '/new' do
+  redirect '/asdf'
 end
 
 get '/css/application.css' do

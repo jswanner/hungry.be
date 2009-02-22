@@ -3,7 +3,11 @@
 %html
   %head
     %title hungry.be
-    %link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen', :href => '/css/application.css'}/
+    %link{:href => '/css/screen.css', :rel => 'stylesheet', :type => 'text/css', :media => 'screen', :charset => "utf-8"}/
+    %link{:href => '/css/print.css', :rel => 'stylesheet', :type => 'text/css', :media => 'print'}/
+    /[if IE]
+      %link{:href => "/css/ie.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css", :charset => "utf-8"}/
+    %link{:href => '/css/application.css', :rel => 'stylesheet', :type => 'text/css', :media => 'screen', :charset => "utf-8"}/
   %body
     %h1 hungry.be
     = yield

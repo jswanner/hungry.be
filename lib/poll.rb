@@ -2,7 +2,8 @@ class Poll
   attr_accessor :id
 
   def self.find(id)
-    post = new
-    post.id = id
+    poll = new
+    poll.id = id
+    poll
   end
 end
