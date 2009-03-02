@@ -1,0 +1,14 @@
+%form{:action => "/#{poll.id}/vote", :method => 'post'}
+  %fieldset
+    %legend Restaurants
+    - poll.candidates.each_with_index do |candidate, index|
+      .candidate
+        %input{:type => 'radio', :name => 'candidate', :id => "candidate#{index}", :value => candidate}/
+        %label{:for => "candidate#{index}"}= candidate
+    .buttons
+      %button.positive{:type=>"submit"}
+        %img{:src=>"/images/icons/tick.png", :alt=>"+"}/
+        vote 
+      %a.button.negative{:href=>"/#{poll.id}"}
+        %img{:src=>"/images/icons/cross.png", :alt=>"x"}/
+        cancel

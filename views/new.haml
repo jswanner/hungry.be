@@ -1,8 +1,14 @@
 %form{:action => '/new', :method => 'post'}
   %fieldset
-    %input{:type => 'text', :name => 'restaurant[]'}/
-    %input{:type => 'text', :name => 'restaurant[]'}/
-    %input{:type => 'text', :name => 'restaurant[]'}/
-    %input{:type => 'text', :name => 'restaurant[]'}/
-    %input{:type => 'submit', :value => 'add poll'}/
+    %input{:type => 'text', :name => 'candidates[]'}/
+    %input{:type => 'text', :name => 'candidates[]'}/
+    %input{:type => 'text', :name => 'candidates[]'}/
+    %input{:type => 'text', :name => 'candidates[]'}/
+    .buttons
+      %button.positive{:type=>"submit"}
+        %img{:src=>"/images/icons/tick.png", :alt=>"+"}/
+        save
+      %a.button.negative{:href=>"/"}
+        %img{:src=>"/images/icons/cross.png", :alt=>"x"}/
+        cancel
 

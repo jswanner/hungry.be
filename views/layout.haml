@@ -1,14 +1,18 @@
 !!! XML
-!!!
-%html
+!!! Strict
+%html{:xmlns => 'http://www.w3.org/1999/xhtml'}
   %head
     %title hungry.be
-    %link{:href => '/css/screen.css', :rel => 'stylesheet', :type => 'text/css', :media => 'screen', :charset => "utf-8"}/
-    %link{:href => '/css/print.css', :rel => 'stylesheet', :type => 'text/css', :media => 'print'}/
+    %link{:href => '/css/screen.css', :media => 'screen, projection', :rel => 'stylesheet', :type => 'text/css', :charset => "utf-8"}/
+    %link{:href => '/css/print.css', :media => 'print', :rel => 'stylesheet', :type => 'text/css'}/
     /[if IE]
-      %link{:href => "/css/ie.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css", :charset => "utf-8"}/
-    %link{:href => '/css/application.css', :rel => 'stylesheet', :type => 'text/css', :media => 'screen', :charset => "utf-8"}/
+      %link{:href => "/css/ie.css", :media => "screen, projection", :rel => "stylesheet", :type => "text/css", :charset => "utf-8"}/
+    %link{:href => '/css/application.css', :media => 'screen, projection', :rel => 'stylesheet', :type => 'text/css', :charset => "utf-8"}/
   %body
-    %h1 hungry.be
-    = yield
-
+    #header
+      %h1 hungry.be
+    #main
+      = yield
+      %br{:style => 'clear: both;'}/
+    #footer
+      some footer information
