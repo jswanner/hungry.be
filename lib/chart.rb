@@ -1,15 +1,17 @@
 class HungryChart
   def self.pie(hash)
+    total = hash.inject(0){|s, p| k,v = p; s += v.to_i}
     data = {:legend => [], :data => []}
     sorted = hash.sort_by{|k, v| v }
     sorted.each do |k, v|
+      p = ((v.to_f/total) * 100).round if total > 0
       data[:data].push v
-      data[:legend].push k
+      data[:legend].push "#{k} (#{p}%)"
     end
-    Gchart.pie(
+    Gchart.pie_3d(
       :data =>    data[:data],
       :legend =>  data[:legend],
-      :size =>    '600x400'
+      :size =>    '750x250'
     )
   end
 end

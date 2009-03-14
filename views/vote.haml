@@ -1,6 +1,6 @@
 %form{:action => "/#{poll.id}/vote", :method => 'post'}
   %fieldset
-    %legend Restaurants
+    %legend which restaurant to you want to eat at?
     - poll.candidates.each_with_index do |candidate, index|
       .candidate
         %input{:type => 'radio', :name => 'candidate', :id => "candidate#{index}", :value => candidate}/

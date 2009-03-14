@@ -1,5 +1,6 @@
 %img.chart{:src => "#{poll.chart_url}", :alt => 'chart'}/
-.buttons
-  %a.button{:href => "/#{poll.id}/vote"}
-    %img{:src=>"/images/icons/tick.png", :alt=>"add"}/
-    vote
+-if can_vote?(poll.id)
+  .buttons
+    %a.button{:href => "/#{poll.id}/vote"}
+      %img{:src=>"/images/icons/tick.png", :alt=>"add"}/
+      vote

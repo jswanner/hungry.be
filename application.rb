@@ -1,9 +1,29 @@
+$LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'rubygems'
 %w(jchris-couchrest mattetti-googlecharts).each do |gh_gem|
   gem gh_gem
 end
-%w(sinatra couchrest gchart lib/poll lib/vote lib/chart).each do |gem|
+%w(sinatra couchrest gchart poll vote chart).each do |gem|
   require gem
+end
+
+helpers do
+  def add_poll_to_cookie(poll_id)
+    polls = get_polls_from_cookie
+    polls << poll_id
+    response.set_cookie("polls", polls)
+  end
+
+  def get_polls_from_cookie
+    cookie = request.cookies["polls"]
+    cookie ||= ""
+    polls = cookie.split('&')
+  end
+
+  def can_vote?(poll_id)
+    polls = get_polls_from_cookie
+    !polls.include?(poll_id)
+  end
 end
 
 get '/' do
@@ -14,7 +34,7 @@ get '/new' do
   haml :new
 end
 
-get '/:id' do 
+get '/:id' do
   poll = Poll.get params[:id]
   haml :show, :locals => {:poll => poll}
 end
@@ -31,11 +51,15 @@ post '/new' do
 end
 
 post '/:poll_id/vote' do
-  vote = Vote.new params
-  vote.save
-  poll = Poll.get params[:poll_id]
-  poll.update_chart_url!
-  redirect "/#{poll.id}"
+  poll_id = params[:poll_id]
+  if can_vote?(poll_id)
+    vote = Vote.new params
+    vote.save
+    poll = Poll.get poll_id
+    poll.update_chart_url!
+    add_poll_to_cookie(poll.id)
+  end
+  redirect "/#{poll_id}"
 end
 
 get '/css/application.css' do
