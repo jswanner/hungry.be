@@ -1,14 +1,9 @@
 require 'rubygems'
-require 'sinatra'
-
-root_dir = File.dirname(__FILE__)
-
-Sinatra::Application.set(
-  :views    => File.join(root_dir, 'views'),
-  :app_file => File.join(root_dir, 'application.rb'),
-  :run => false,
-  :environment => ENV['RACK_ENV'].to_sym
-)
-
+# Demo app built for 0.9.x
+gem 'sinatra', '~> 0.9'
+require 'application'
+set :run, false
+set :environment, ENV['RACK_ENV'].to_sym
 run Sinatra::Application
+
 
