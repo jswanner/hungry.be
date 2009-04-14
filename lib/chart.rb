@@ -4,7 +4,7 @@ class HungryChart
     data = {:legend => [], :data => []}
     sorted = hash.sort_by{|k, v| v }
     sorted.each do |k, v|
-      p = ((v.to_f/total) * 100).round if total > 0
+      p = (total > 0) ? ((v.to_f/total) * 100).round : 0
       data[:data].push v
       data[:legend].push "#{k} (#{p}%)"
     end

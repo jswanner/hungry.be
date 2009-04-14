@@ -1,10 +1,10 @@
 %form{:action => '/new', :method => 'post'}
   %fieldset
     %legend restaurants to include in poll
-    %input{:type => 'text', :name => 'candidates[]'}/
-    %input{:type => 'text', :name => 'candidates[]'}/
-    %input{:type => 'text', :name => 'candidates[]'}/
-    %input{:type => 'text', :name => 'candidates[]'}/
+    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
+    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
+    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
+    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
     .buttons
       %button.positive{:type=>"submit"}
         %img{:src=>"/images/icons/tick.png", :alt=>"+"}/
@@ -12,4 +12,5 @@
       %a.button.negative{:href=>"/"}
         %img{:src=>"/images/icons/cross.png", :alt=>"x"}/
         cancel
-
+%script{:type => 'text/javascript'}
+  jQuery(function($){ $('input[type="text"]').titleAsHint(); });

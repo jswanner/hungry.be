@@ -1,5 +1,5 @@
 class Poll < CouchRest::ExtendedDocument
-  use_database CouchRest.database!('http://localhost:5984/hungry-be-dev')
+  use_database CouchRest.new('http://localhost:5984').database('hungry_be')
   property :chart_url
   property :candidates, :default => []
   timestamps!
@@ -7,6 +7,40 @@ class Poll < CouchRest::ExtendedDocument
   create_callback :after, :update_chart_url!
   save_callback :before, :remove_empty_candidates
   save_callback :before, :update_chart_url
+
+  view_by :votes,
+    :map =>
+      "function(doc) {
+        if(doc['couchrest-type'] == 'Vote' && doc['candidate']) {
+          emit(doc['poll_id'], doc['candidate']);
+        }
+      }",
+    :reduce =>
+      "function(keys, values, rereduce) {
+        if(!rereduce){
+          var result = {};
+          values.forEach(function(node){
+            if(result[node]){
+              result[node]++;
+            }else{
+              result[node] = 1;
+            }
+          });
+          return result;
+        }else{
+          var result = {};
+          values.forEach(function(node){
+            for(prop in node){
+              if(result[prop]){
+                result[prop] += node[prop];
+              }else{
+                result[prop] = node[prop];
+              }
+            }
+          });
+          return result;
+        }
+      }"
 
   def update_chart_url
     self.chart_url = HungryChart.pie(votes)
@@ -25,7 +59,7 @@ class Poll < CouchRest::ExtendedDocument
 
   def votes
     @votes = candidates.inject({}){|h, c| h[c] = 0; h}
-    view = database.view('test/candidate-count', :group => true, :key => self.id)["rows"][0]
+    view = Poll.by_votes(:reduce => true, :group => true, :key => self.id)["rows"][0]
     view['value'].each{ |k, v| @votes[k] = v } if view
     @votes
   end

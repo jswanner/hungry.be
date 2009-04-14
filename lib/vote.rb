@@ -1,5 +1,6 @@
 class Vote < CouchRest::ExtendedDocument
-  use_database CouchRest.database!('http://localhost:5984/hungry-be-dev')
+  use_database CouchRest.new('http://localhost:5984').database('hungry_be')
+
   property :poll_id
   property :candidate
   timestamps!
