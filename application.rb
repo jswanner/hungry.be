@@ -7,11 +7,24 @@ end
   require gem
 end
 
+configure :development do
+  set :domain, 'hungry.be.local'
+end
+
+configure :production do
+  set :domain, 'hungry.be'
+end
+
 helpers do
   def add_poll_to_cookie(poll_id)
     polls = get_polls_from_cookie
     polls << poll_id
-    response.set_cookie("polls", polls)
+    response.set_cookie("polls", {
+      :domain => options.domain,
+      :path => '/',
+      :expires => Time.now + (60 * 60 * 24 * 365),
+      :value => polls
+    })
   end
 
   def get_polls_from_cookie
