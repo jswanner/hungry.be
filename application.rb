@@ -60,7 +60,7 @@ end
 post '/new' do
   poll = Poll.new params
   poll.save
-  redirect "/#{poll.id}"
+  redirect "/#{poll.id}/vote"
 end
 
 post '/:poll_id/vote' do
