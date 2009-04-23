@@ -1,10 +1,14 @@
 %form{:action => '/new', :method => 'post'}
   %fieldset
     %legend restaurants to include in poll
-    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
-    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
-    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
-    %input{:type => 'text', :title => 'Restaurant', :name => 'candidates[]'}/
+    #candidates
+      %input{:type=>'text', :title=>'Restaurant', :name=>'candidates[]'}/
+      %input{:type=>'text', :title=>'Restaurant', :name=>'candidates[]'}/
+      %input{:type=>'text', :title=>'Restaurant', :name=>'candidates[]'}/
+      %input{:type=>'text', :title=>'Restaurant', :name=>'candidates[]'}/
+    .buttons
+      %a.button{:id=>'add_candidate', :href=>'#'}
+        + add restaurant
     .buttons
       %button.positive{:type=>"submit"}
         %img{:src=>"/images/icons/tick.png", :alt=>"+"}/
@@ -12,5 +16,13 @@
       %a.button.negative{:href=>"/"}
         %img{:src=>"/images/icons/cross.png", :alt=>"x"}/
         cancel
-%script{:type => 'text/javascript'}
-  jQuery(function($){ $('input[type="text"]').titleAsHint(); });
+:javascript
+  jQuery(function($){
+    $('input[type="text"]').titleAsHint();
+    $('#add_candidate').bind('click', function(){
+      $('#candidates')
+        .append('<input type="text" title="Restaurant" name="candidates[]" />')
+        .find('input:last').titleAsHint();
+      return false;
+    });
+  });
