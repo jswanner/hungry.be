@@ -1,10 +1,11 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'rubygems'
-%w(jchris-couchrest mattetti-googlecharts).each do |gh_gem|
+
+%w(sinatra jchris-couchrest mattetti-googlecharts).each do |gh_gem|
   gem gh_gem
 end
-%w(sinatra couchrest gchart poll vote chart).each do |gem|
-  require gem
+%w(sinatra couchrest gchart poll vote invite chart).each do |lib|
+  require lib
 end
 
 configure :development do
