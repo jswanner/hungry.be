@@ -18,9 +18,7 @@
       %br{:style => 'clear: both;'}/
     #footer
       this is a very early release - please check back for future updates
-    :javascript
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    %script{:type => 'text/javascript', :src => 'http://www.google-analytics.com/ga.js'}
     :javascript
       try {
         var pageTracker = _gat._getTracker("UA-7325596-3");
