@@ -1,6 +1,6 @@
 %img.chart{:src => "#{poll.chart_url}", :alt => 'chart'}/
--if can_vote?(poll.id)
+-if can_invite?(poll.id)
   .buttons
-    %a.button{:href => "/#{poll.id}/vote"}
+    %a.button{:href => "/#{poll.id}/invite"}
       %img{:src=>"/images/icons/tick.png", :alt=>"add"}/
-      vote
+      invite others

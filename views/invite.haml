@@ -1,0 +1,27 @@
+%form{:action => '/#{poll_id}/invite', :method => 'post'}
+  %fieldset
+    %legend who do you want to invite?
+    #candidates
+      %input{:type=>'text', :title=>'Email Address', :name=>'addresses[]'}/
+      %input{:type=>'text', :title=>'Email Address', :name=>'addresses[]'}/
+      %input{:type=>'text', :title=>'Email Address', :name=>'addresses[]'}/
+    .buttons
+      %a.button{:id=>'add_address', :href=>'#'}
+        + add email address
+    .buttons
+      %button.positive{:type=>"submit"}
+        %img{:src=>"/images/icons/tick.png", :alt=>"+"}/
+        save
+      %a.button.negative{:href=>"/"}
+        %img{:src=>"/images/icons/cross.png", :alt=>"x"}/
+        cancel
+:javascript
+  jQuery(function($){
+    $('input[type="text"]').titleAsHint();
+    $('#add_address').bind('click', function(){
+      $('#candidates')
+        .append('<input type="text" title="Email Address" name="addresses[]" />')
+        .find('input:last').titleAsHint();
+      return false;
+    });
+  });
