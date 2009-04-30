@@ -1,5 +1,5 @@
 class Poll < CouchRest::ExtendedDocument
-  use_database CouchRest.new('http://localhost:5984').database!('hungry_be')
+  #use_database CouchRest.new('http://localhost:5984').database!('hungry_be')
 
   property :chart_url
   property :candidates, :default => []

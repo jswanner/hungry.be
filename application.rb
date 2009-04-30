@@ -9,11 +9,13 @@ end
 end
 
 configure :development do
-  set :domain, 'hungry.be.local'
+  set :domain,  'hungry.be.local'
+  CouchRest::Document.database = CouchRest.new('http://localhost:5984').database!('hungry_be')
 end
 
 configure :production do
-  set :domain, 'hungry.be'
+  set :domain,  'hungry.be'
+  CouchRest::Document.database = CouchRest.new('http://localhost:5984').database!('hungry_be')
 end
 
 helpers do
@@ -34,9 +36,8 @@ helpers do
     polls = cookie.split('&')
   end
 
-  def can_vote?(poll_id)
-    polls = get_polls_from_cookie
-    !polls.include?(poll_id)
+  def can_vote?(invite, poll_id)
+    invite.poll_id == poll_id && !invite.has_voted
   end
 
   def can_invite?(poll_id)
@@ -70,7 +71,7 @@ end
 get '/:poll_id/:invite_id' do
   poll = Poll.get params[:poll_id]
   invite = Invite.get params[:invite_id]
-  unless invite.has_voted
+  if can_vote?(invite, poll.id) 
     haml :vote, :locals => {:poll => poll, :invite => invite}
   else
     redirect "/#{poll.id}"
@@ -85,10 +86,24 @@ post '/new' do
   redirect "/#{poll.id}/#{invite.id}"
 end
 
+post '/:poll_id/invite' do
+  poll_id = params[:poll_id]
+  params[:addresses].each do |address|
+    unless address.empty?
+      invite = Invite.new(
+        :address => address,
+        :poll_id => poll_id
+      )
+      invite.save
+    end
+  end
+  redirect "/#{poll_id}"
+end
+
 post '/:poll_id/:invite_id' do
   poll_id = params[:poll_id]
   invite = Invite.get params[:invite_id]
-  unless invite.has_voted
+  if can_vote?(invite, poll_id)
     vote = Vote.new params
     vote.save
     poll = Poll.get poll_id
