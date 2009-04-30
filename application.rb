@@ -9,12 +9,12 @@ end
 end
 
 configure :development do
-  set :domain,  'hungry.be.local'
+  set :domain, 'hungry.be.local'
   CouchRest::Document.database = CouchRest.new('http://localhost:5984').database!('hungry_be')
 end
 
 configure :production do
-  set :domain,  'hungry.be'
+  set :domain, 'hungry.be'
   CouchRest::Document.database = CouchRest.new('http://localhost:5984').database!('hungry_be')
 end
 
