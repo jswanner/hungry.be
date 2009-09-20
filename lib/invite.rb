@@ -22,7 +22,8 @@ class Invite < CouchRest::ExtendedDocument
       :subject  => 'hungry.be invitation',
       :body     => 'hello, world',
       :domain   => 'hungry.be',
-      :via      => :sendmail,
+      :via      => :smtp,
+      :smtp     => YAML.load_file('../smtp.yml')
     )
     self.sent = true
   end

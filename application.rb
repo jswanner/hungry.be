@@ -3,7 +3,7 @@ Dir.glob(File.dirname(__FILE__) + '/vendor/**/lib').each do |dir|
   $:.unshift dir
 end
 
-%w(couchrest sinatra gchart pony poll vote invite chart).each do |lib|
+%w(sinatra couchrest gchart YAML smtp-tls pony poll vote invite chart).each do |lib|
   require lib
 end
 

@@ -1,0 +1,6 @@
+:host: smtp.gmail.com
+:port: 587
+:user: invite@hungry.com
+:pass: behungryinvite
+:auth: :plain
+:domain: hungry.be
